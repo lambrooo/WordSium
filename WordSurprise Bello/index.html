@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WordSurprise: your daily micro-dose of linguistic wonder. Discover surprising English words in Etymology, Travel and Writers sections.">
+    <meta name="keywords" content="words, language, etymology, travel, writers, vocabulary, english">
+    <meta name="author" content="WordSurprise">
+    <meta name="theme-color" content="#e5f8f3"> <!-- Colore tema per barra browser mobile -->
+
+    <title>WordSurprise - Daily Linguistic Wonder</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="js/main.js" as="script"> <!-- Preload script principale -->
+
+    <!-- Favicon (Esempio - Sostituisci con i tuoi) -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts - Playfair Display, Poppins, & Cormorant Garamond -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS (dopo Bootstrap) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="homepage-body"> <!-- Classe specifica homepage -->
+
+    <!-- Page loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <p>Loading words...</p>
+        </div>
+    </div>
+
+    <!-- User Streak Badge (Ora indipendente in alto a sinistra) -->
+    <div class="streak-badge ui-badge" id="streak-badge" >
+        <div class="streak-content">
+            <i class="fas fa-fire"></i>
+            <span id="streak-count">0</span>
+            <span class="streak-label">Day Streak!</span>
+        </div>
+        
+    </div>
+
+    <!-- Contenitore per UI in alto a destra -->
+    <div class="top-right-ui">
+        <!-- Collection Button/Icon -->
+        <button id="collection-btn" class="collection-toggle-btn ui-badge" aria-label="Open word collection" title="Open your saved words">
+            <i class="fas fa-bookmark"></i>
+            <span class="collection-count">0</span> <!-- Aggiornato da JS -->
+        </button>
+
+        <!-- Theme toggle -->
+        <div class="theme-toggle" aria-label="Toggle light/dark theme">
+            <button id="theme-toggle-btn" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="page-container">
+        <header class="container text-center site-header">
+            <!-- Main title with Playfair Display -->
+            <h1 class="display-2 fw-bold logo-animated">WordSurprise</h1>
+            <!-- Subtitle with Poppins -->
+            <p class="lead subtitle-animated">Your daily micro-dose of linguistic wonder.</p>
+        </header>
+
+        <!-- Main container for primary content -->
+        <main class="container main-content">
+            <div class="row justify-content-center text-center">
+                <!-- Column for central content -->
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <h2 class="mb-4 section-title-animated">Choose your surprise:</h2>
+                    <!-- Navigation: Horizontal style on desktop, vertical on mobile -->
+                    <div class="button-wrapper">
+                        <nav class="nav-links-container nav-links-animated horizontal-force">
+                            <a href="etymology/" class="btn btn-lg section-link" data-section="etymology" data-gradient="peach">
+                                <i class="fas fa-book-open icon-left"></i>
+                                <span>Etymology</span>
+                            </a>
+                            <a href="travel/" class="btn btn-lg section-link" data-section="travel" data-gradient="mint">
+                                <i class="fas fa-globe-americas icon-left"></i>
+                                <span>Travel</span>
+                            </a>
+                            <a href="writers/" class="btn btn-lg section-link" data-section="writers" data-gradient="mixed">
+                                <i class="fas fa-feather-alt icon-left"></i>
+                                <span>Writers</span>
+                            </a>
+                        </nav>
+                    </div>
+                    <p class="mt-4 text-muted small info-animated">Click on a section to discover a fascinating word!</p>
+
+                    <!-- Newsletter signup -->
+                    <div class="newsletter-container info-animated">
+                        <div class="newsletter-toggle" id="newsletter-toggle">
+                            <i class="far fa-envelope"></i> Get daily words in your inbox
+                        </div>
+                        <div class="newsletter-form" id="newsletter-form">
+                            <form id="signup-form">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Your email address" aria-label="Email address" required>
+                                    <button class="btn subscribe-btn" type="submit">Subscribe</button>
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" value="" id="privacy-check" required>
+                                    <label class="form-check-label" for="privacy-check">
+                                        I agree to the <a href="privacy.html" class="privacy-link" target="_blank">privacy policy</a>
+                                    </label>
+                                </div>
+                            </form>
+                            <div class="thank-you-message" style="display: none;">Thanks for subscribing! Check your inbox to confirm.</div>
+                        </div>
+                    </div>
+
+                    <!-- Social sharing -->
+                    <div class="social-sharing info-animated">
+                        <p class="share-text">Share WordSurprise:</p>
+                        <div class="share-icons">
+                            <a href="#" class="share-icon" aria-label="Share on Twitter" onclick="shareOnSocial('twitter'); return false;">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="share-icon" aria-label="Share on Facebook" onclick="shareOnSocial('facebook'); return false;">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="share-icon" aria-label="Share on Instagram" onclick="showInstagramShare(); return false;">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="share-icon" aria-label="Share on TikTok" onclick="showTikTokShare(); return false;">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="#" class="share-icon" aria-label="Share on WhatsApp" onclick="shareOnSocial('whatsapp'); return false;">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                             <a href="#" class="share-icon" aria-label="Share on LinkedIn" onclick="shareOnSocial('linkedin'); return false;">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="share-icon" aria-label="Share via Email" onclick="shareOnSocial('email'); return false;">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer with copyright text -->
+        <footer class="container text-center site-footer">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link">About</a>
+                <span>|</span>
+                <a href="contact.html" class="footer-link">Contact</a>
+                <span>|</span>
+                <a href="privacy.html" class="footer-link">Privacy</a>
+                <span>|</span>
+                <a href="terms.html" class="footer-link">Terms</a>
+            </div>
+            <p class="small">© <span id="year"></span> WordSurprise. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Modals (Instagram, TikTok, Collection) -->
+    <!-- Instagram Share Modal -->
+    <div id="instagramShareModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="hideModal('instagramShareModal')">×</span>
+            <h3>Share on Instagram</h3>
+            <div class="instagram-card" id="instagram-card">
+                <div class="insta-card-header">
+                    <img src="img/logo-icon.png" alt="WordSurprise" class="insta-logo"> <!-- Assicurati che img/logo-icon.png esista -->
+                    <span class="insta-title">WordSurprise</span>
+                </div>
+                <div class="insta-card-body">
+                    <div class="insta-word">Serendipity</div> <!-- Default -->
+                    <div class="insta-phonetic">/ˌser.ənˈdɪp.ə.ti/</div> <!-- Default -->
+                    <div class="insta-definition">Finding valuable things by chance</div> <!-- Default -->
+                    <div class="insta-category">Word Collection</div> <!-- Default -->
+                </div>
+                <div class="insta-card-footer">
+                    <span>Follow @wordsurprise for daily words</span>
+                    <span>#WordSurprise #Vocabulary #Linguistics</span>
+                </div>
+            </div>
+            <div class="modal-instructions">
+                <p>1. Take a screenshot or download the image.</p>
+                <p>2. Upload it to your Instagram Story or Post.</p>
+                <p>3. Tag us <span style="font-weight: bold;">@wordsurprise</span> and use <span style="font-weight: bold;">#WordSurprise</span></p>
+            </div>
+            <button class="download-btn" onclick="downloadInstagramImage()">
+                <i class="fas fa-download"></i> Download Image
+            </button>
+        </div>
+    </div>
+
+    <!-- TikTok Share Modal -->
+    <div id="tiktokShareModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="hideModal('tiktokShareModal')">×</span>
+            <h3>Share on TikTok</h3>
+            <div class="tiktok-instructions">
+                <p><i class="fab fa-tiktok tiktok-icon"></i></p>
+                <h4>How to share your word on TikTok:</h4>
+                <ol>
+                    <li>Open the TikTok app on your device.</li>
+                    <li>Tap the '+' button to create a new video.</li>
+                    <li>Record yourself saying and explaining the word.</li>
+                    <li>Add text with the word and definition.</li>
+                    <li>Use hashtags #WordSurprise #LearnNewWords #Vocabulary</li>
+                    <li>Share your creation!</li>
+                </ol>
+                <p class="tiktok-tip">Tip: Sharing how you'll use this word makes great content!</p>
+            </div>
+            <div class="tiktok-buttons">
+                <button class="tiktok-copy-btn" onclick="copyToClipboard('Serendipity - Finding valuable things by chance. #WordSurprise #LearnNewWords')">
+                    <i class="fas fa-copy"></i> Copy Word & Hashtags
+                </button>
+                <button class="tiktok-open-btn" onclick="openTikTok()">
+                    <i class="fab fa-tiktok"></i> Open TikTok
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Word Collection Modal -->
+    <div id="collectionModal" class="modal-overlay">
+        <div class="modal-content collection-modal">
+            <span class="modal-close" onclick="hideModal('collectionModal')">×</span>
+            <h3>Your Word Collection</h3>
+            <div class="collection-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="etymology">Etymology</button>
+                <button class="filter-btn" data-filter="travel">Travel</button>
+                <button class="filter-btn" data-filter="writers">Writers</button>
+            </div>
+            <div class="collection-empty" style="display: none;">
+                <i class="fas fa-box-open"></i>
+                <p>Your collection is empty</p>
+                <p class="collection-hint">Explore words and save them here!</p>
+            </div>
+            <div class="saved-words-container" id="saved-words">
+                <!-- Saved words loaded by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Placeholder (Creato da JS se necessario) -->
+    <!-- <div class="toast-notification"></div> -->
+
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- html2canvas for image generation (caricato con defer) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+
+    <!-- Custom JS for Homepage -->
+    <script src="js/main.js"></script>
+
+    <!-- Script inline per anno è stato rimosso, gestito da main.js -->
+
+</body>
+</html>

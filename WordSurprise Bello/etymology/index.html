@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Descrizione Specifica -->
+    <meta name="description" content="Explore fascinating word origins and etymology with WordSurprise. Discover a new surprising word every scroll.">
+    <!-- Titolo Specifico -->
+    <title>WordSurprise Etymology</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS (Percorso Corretto) -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/infinite-scroll.css">
+
+</head>
+<!-- Data Section Specifica + Classe Generale -->
+<body data-section="etymology" class="section-body">
+
+    <!-- Header Migliorato -->
+    <header class="container-fluid section-header">
+         <div class="container d-flex justify-content-between align-items-center">
+            <a href="/" class="home-link"><i class="fas fa-arrow-left"></i> Home</a>
+            <!-- Titolo H1 Specifico -->
+            <h1 class="section-title mb-0">Etymology Surprise</h1>
+            <button id="view-history-btn" class="history-toggle" aria-label="View word history">
+                <i class="fas fa-history"></i>
+            </button>
+         </div>
+    </header>
+
+    <!-- Navigation History Drawer (Slide from right) -->
+    <div id="history-drawer" class="history-drawer">
+        <div class="history-header">
+            <h3>Words You've Seen</h3>
+            <button class="close-drawer" aria-label="Close history"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="history-content">
+            <ul id="history-list" class="history-list">
+                <!-- Will be populated by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container flex-grow-1">
+        <div id="words-container" class="words-container">
+            <!-- Initial loading indicator -->
+            <div class="word-loading-indicator">
+                <div class="loading-spinner"></div>
+                <p>Discovering surprising words...</p>
+            </div>
+            
+            <!-- Word cards will be dynamically inserted here -->
+            
+            <!-- Initial scroll indicator -->
+            <div class="scroll-indicator">
+                <p>Scroll for more words</p>
+                <i class="fas fa-chevron-down fa-bounce"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- Word template (hidden, used for cloning) -->
+    <template id="word-card-template">
+        <div class="word-card" data-word-id="">
+            <div class="card-body">
+                <div class="word-header">
+                    <h2 class="word-display card-title"></h2>
+                    <div class="word-actions">
+                        <button class="audio-btn" aria-label="Listen to pronunciation">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button class="share-btn" aria-label="Share this word">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="definition-display card-subtitle"></p>
+                <div class="story-display card-text"></div>
+                <div class="word-footer">
+                    <button class="save-word-btn">
+                        <i class="far fa-bookmark"></i> Save this word
+                    </button>
+                    <span class="word-number badge"></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Quick share modal -->
+    <div id="quick-share-modal" class="quick-share-modal">
+        <div class="quick-share-content">
+            <button class="close-modal">&times;</button>
+            <h3>Share <span class="share-word-name"></span></h3>
+            <div class="share-options">
+                <button class="share-option" data-platform="twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </button>
+                <button class="share-option" data-platform="facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </button>
+                <button class="share-option" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="share-option copy-link">
+                    <i class="fas fa-link"></i>
+                    <span>Copy Link</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification placeholder -->
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <!-- Footer Migliorato -->
+    <footer class="container text-center site-footer">
+         <div class="footer-links mb-3">
+             <a href="/about.html" class="footer-link">About</a>
+             <span>|</span>
+             <a href="/contact.html" class="footer-link">Contact</a>
+             <span>|</span>
+             <a href="/privacy.html" class="footer-link">Privacy</a>
+             <span>|</span>
+             <a href="/terms.html" class="footer-link">Terms</a>
+         </div>
+        <p class="text-muted small">© <span id="year"></span> WordSurprise. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <!-- Intersection Observer polyfill for older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
+    
+    <!-- Custom JS -->
+    <script src="../js/script.js" defer></script>
+</body>
+</html>

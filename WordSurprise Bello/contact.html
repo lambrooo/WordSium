@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - WordSurprise</title>
+    <meta name="description" content="Contatta il team di WordSurprise per domande o feedback.">
+    <!-- Link CSS e Font come in about.html -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Stili .content-page-header, .content-container, .back-link come in about.html */
+        body { background: var(--color-bg-4); animation: none; }
+        .content-page-header { padding-top: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--brand-border-color); margin-bottom: 2rem;}
+        body.dark-theme .content-page-header { border-bottom-color: rgba(255,255,255,0.1);}
+        .content-container { max-width: 800px; margin: 0 auto 3rem auto; padding: 2rem; background: rgba(255, 255, 255, 0.7); border-radius: 10px; backdrop-filter: blur(5px); box-shadow: var(--brand-button-shadow); }
+        body.dark-theme .content-container { background: rgba(30, 30, 30, 0.7); }
+        .content-container h1 { font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; }
+        .content-container p { font-family: 'Poppins', sans-serif; line-height: 1.8; margin-bottom: 1rem; }
+        .back-link { color: var(--brand-text-medium); text-decoration: none; font-weight: 500;}
+        .back-link:hover { color: var(--brand-text-dark); }
+        body.dark-theme .back-link { color: var(--dark-text-medium); }
+        body.dark-theme .back-link:hover { color: var(--dark-text-light); }
+        /* Stili modulo contatto specifici */
+        .contact-form label { font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .contact-form .form-control { margin-bottom: 1rem; background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.1); }
+        .contact-form textarea.form-control { min-height: 120px; }
+        .contact-form .btn-primary { background-color: var(--brand-text-dark); border: none; padding: 0.7rem 1.5rem; }
+        body.dark-theme .contact-form .form-control { background: rgba(50,50,50,0.8); border-color: rgba(255,255,255,0.1); color: var(--dark-text-light); }
+        body.dark-theme .contact-form .form-control::placeholder { color: var(--dark-text-medium); }
+        body.dark-theme .contact-form .btn-primary { background-color: var(--dark-text-light); color: var(--dark-bg-1); }
+    </style>
+</head>
+<body data-page="static">
+    <header class="container content-page-header">
+        <a href="/" class="back-link">← Back to Home</a>
+    </header>
+
+    <main class="container">
+        <div class="content-container">
+            <h1>Contact Us</h1>
+            <p>Have questions, suggestions, or just want to share an interesting word? We'd love to hear from you!</p>
+            <p>You can reach us via email at: <a href="mailto:hello@wordsurprise.example.com">hello@wordsurprise.example.com</a> (Replace with your actual email).</p>
+            <p>Alternatively, fill out the form below:</p>
+
+            <!-- Esempio di Modulo Contatto (solo frontend, non invia realmente) -->
+            <form class="contact-form" id="contact-form" method="POST" onsubmit="handleContactSubmit(event)">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+                <p id="contact-response" class="small mt-3" style="display: none;"></p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="container text-center site-footer mt-5">
+         <div class="footer-links mb-3">
+             <a href="about.html" class="footer-link">About</a> |
+             <a href="privacy.html" class="footer-link">Privacy</a> |
+             <a href="terms.html" class="footer-link">Terms</a>
+         </div>
+        <p class="small">© <span id="year"></span> WordSurprise. All rights reserved.</p>
+    </footer>
+
+    <!-- JS per anno, tema e gestione form contatto -->
+    <script>
+        const yearSpan = document.getElementById('year');
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        const savedTheme = localStorage.getItem('darkTheme');
+         if (savedTheme === 'true') {
+            document.body.classList.add('dark-theme');
+        } else if (savedTheme === 'false') {
+             document.body.classList.remove('dark-theme');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-theme');
+        }
+
+        // Gestione invio (simulato)
+        function handleContactSubmit(event) {
+            event.preventDefault(); // Impedisce invio reale
+            const responseElement = document.getElementById('contact-response');
+            const form = document.getElementById('contact-form');
+            responseElement.textContent = "Thank you for your message! (This is a demo)";
+            responseElement.style.display = 'block';
+            responseElement.style.color = 'green';
+            form.reset(); // Pulisce il form
+             setTimeout(() => { responseElement.style.display = 'none'; }, 5000); // Nasconde dopo 5 sec
+        }
+    </script>
+</body>
+</html>
